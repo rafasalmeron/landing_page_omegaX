@@ -17,7 +17,6 @@ const sections = [
 
 const Home = () => {
   const [activeSection, setActiveSection] = useState('hero');
-  const [triggerAnimation, setTriggerAnimation] = useState(0);
 
   const handleScroll = () => {
     const sectionOffsets = sections.map((section) => {
@@ -31,7 +30,6 @@ const Home = () => {
       if (scrollPos > sectionOffsets[i].offset - 50) {
         if (sectionOffsets[i].id !== activeSection) {
           setActiveSection(sectionOffsets[i].id);
-          setTriggerAnimation((prev) => prev + 1);
         }
         break;
       }
@@ -61,7 +59,7 @@ const Home = () => {
               exit={{ opacity: 0, y: 50 }}
               transition={{ duration: 0.5 }}
             >
-              <Component triggerAnimation={triggerAnimation} />
+              <Component />
             </motion.section>
           ))}
         </AnimatePresence>

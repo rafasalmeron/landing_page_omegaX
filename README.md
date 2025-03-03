@@ -1,6 +1,6 @@
 
 
-# SaaS de Gerenciamento de Estoque
+# Gerenciamento de Estoque
 
 Este repositório contém a landing page de um projeto de gerenciamento de estoque desenvolvido para pequenos negócios.
 

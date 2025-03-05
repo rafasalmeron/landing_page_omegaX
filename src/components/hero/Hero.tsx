@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import Form from '@/components/form/Form';
+import Form from '@/components/customForm/CustomForm';
 
 const Hero = () => {
   return (

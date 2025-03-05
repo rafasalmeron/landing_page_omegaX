@@ -3,12 +3,12 @@
 import { useTheme } from '@/hooks/ThemeProvider';
 import Nav from '@/components/nav/Nav';
 import { useEffect, useState } from 'react';
+import MaterialUISwitch from '@/components/header/MaterialUISwitch';
 
 const Header = () => {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-expect-error
   const { theme, toggleTheme } = useTheme();
-
   const [isNavFixed, setIsNavFixed] = useState(false);
 
   useEffect(() => {
@@ -31,12 +31,11 @@ const Header = () => {
               Conecte, gerencie, cresça.
             </span>
           </div>
-          <button
-            onClick={toggleTheme}
-            className="p-2 rounded-lg border border-gray-700 dark:border-gray-500 transition-colors"
-          >
-            {theme === 'light' ? '🌙 Modo Escuro' : '☀️ Modo Claro'}
-          </button>
+          <MaterialUISwitch
+            checked={theme === 'dark'}
+            onChange={toggleTheme}
+            inputProps={{ 'aria-label': 'toggle theme' }}
+          />
         </div>
       </div>
       <Nav isFixed={isNavFixed} />

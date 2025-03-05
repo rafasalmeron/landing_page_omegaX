@@ -42,7 +42,7 @@ const Home = () => {
   }, [activeSection]);
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <main className="min-h-screen flex flex-col">
       <Header />
       <div className="space-y-20 max-w-7xl mx-auto">
         <AnimatePresence>
@@ -64,7 +64,7 @@ const Home = () => {
           ))}
         </AnimatePresence>
       </div>
-    </div>
+    </main>
   );
 };
 

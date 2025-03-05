@@ -1,6 +1,8 @@
-import Form from 'next/form';
-import CircularProgress from '@mui/material/CircularProgress';
+'use client';
+
 import { useState, useRef, useEffect } from 'react';
+import { submitForm } from './submitForm';
+import CircularProgress from '@mui/material/CircularProgress';
 import IMask from 'imask';
 
 const CustomForm = () => {
@@ -10,51 +12,27 @@ const CustomForm = () => {
 
   useEffect(() => {
     if (phoneInputRef.current) {
-      const maskOptions = {
-        mask: '(00) 0 0000-0000',
-      };
+      const maskOptions = { mask: '(00) 0 0000-0000' };
       const mask = IMask(phoneInputRef.current, maskOptions);
-
       return () => mask.destroy();
     }
   }, []);
 
   const handleSubmit = async (formData: FormData) => {
     setIsLoading(true);
+    const result = await submitForm(formData);
 
-    const phone = formData.get('phone') as string;
-
-    // Validação de número de telefone
-    const cleanedPhone = phone.replace(/\D/g, ''); // Remove caracteres não numéricos
-    if (cleanedPhone.length !== 11) {
-      setFormStatus('O número de telefone deve conter 11 dígitos.');
-      setIsLoading(false);
-      return;
+    if (result.error) {
+      setFormStatus(result.error);
+    } else {
+      setFormStatus(result.success || 'Erro desconhecido');
     }
 
-    try {
-      const response = await fetch('/api/lead', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(Object.fromEntries(formData.entries())),
-      });
-
-      if (response.ok) {
-        setFormStatus('Enviado com sucesso!');
-      } else {
-        setFormStatus('Erro: Dados inválidos.');
-      }
-    } catch {
-      setFormStatus('Erro ao conectar com o servidor.');
-    } finally {
-      setIsLoading(false);
-    }
+    setIsLoading(false);
   };
 
   return (
-    <Form
+    <form
       action={handleSubmit}
       className="mt-8 p-3 max-w-3xl mx-auto rounded-lg"
     >
@@ -148,7 +126,7 @@ const CustomForm = () => {
           {formStatus}
         </p>
       )}
-    </Form>
+    </form>
   );
 };
 
